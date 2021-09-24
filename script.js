@@ -1,21 +1,22 @@
-let y = 250;
+var gravity = 0.1;
+var y = 50;
+var vy = -1.0;
 
 function setup() {
-	createCanvas(500, 500);
-  background(100);
+  createCanvas(400, 400);
 }
 
 function draw() {
+  background(220);
+  ellipse(200, y, 60, 60);
+  vy += gravity;
+  y += vy;
+  y = constrain(y, 30, 370);
 
-  if (keyIsDown(UP_ARROW)) {
-    y -= 5;
-  }
-
-  if (keyIsDown(DOWN_ARROW)) {
-    y += 5;
-  }
-
-  clear();
-  ellipse(250, y, 50, 50);
 }
 
+function keyPressed() {
+  if (keyCode === 32) {
+   vy = -5; 
+  }  
+}
