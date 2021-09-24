@@ -4,10 +4,11 @@ var vy = -1.0;
 
 function setup() {
   createCanvas(400, 400);
+  bg = loadImage("ass.jfif")
 }
 
 function draw() {
-  background(220);
+  background(bg);
   ellipse(200, y, 60, 60);
   vy += gravity;
   y += vy;
