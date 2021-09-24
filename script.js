@@ -1,15 +1,21 @@
-let x = 250;
 let y = 250;
 
 function setup() {
 	createCanvas(500, 500);
-  background(50);
+  background(100);
 }
 
 function draw() {
-	ellipse(x,y,50,50)
-  if (key===" "){
-    y = y - 10
+
+  if (keyIsDown(UP_ARROW)) {
+    y -= 5;
   }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    y += 5;
+  }
+
+  clear();
+  ellipse(250, y, 50, 50);
 }
 
