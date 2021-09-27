@@ -23,6 +23,14 @@ class Paddenstoel(){
   }
 }
 
+class Frog(){
+  constructor(vy, y, gravity){
+    this.vy = vy;
+    this.y = y;
+    this.gravity = gravity;
+  }
+}
+
 function keyPressed() {
   if (keyCode === 32) {
    vy = -5; 
