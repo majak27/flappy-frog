@@ -13,7 +13,14 @@ function draw() {
   vy += gravity;
   y += vy;
   y = constrain(y, 30, 370);
+}
 
+class Paddenstoel(){
+  constructor(bottom, height,v){
+    this.bottom = bottom;
+    this.height = height;
+    this.v = v;
+  }
 }
 
 function keyPressed() {
