@@ -1,39 +1,36 @@
-let pipes = [];
-var gravity = 0.25;
+let pillars = [];
+var gravity = 0.35;
 var y = 200;
 var vy = -1.0;
 var frog;
 
+
 function preload() {
-  bg = loadImage('pictures/ass.jpg');
-  ps = loadImage('pictures/paddenstoel.png');
+  bg = loadImage('pictures/bg.gif');
   fr = loadImage('pictures/frog.png')
 }
 
-class Paddenstoel{
-  constructor(x, y, w, h, top, bottom, speed){
+
+class Pillar {
+  constructor(x, y, h, top, bottom) {
     this.x = x;
-    this.y= y;
-    this.w = 50;
-    this.h = random(80,140);
+    this.y = y;
+    this.h = h;
     this.top = (200 + (200-this.h));
     this.bottom = (200-this.h);
-    this.speed = 1;
-    }
-  drawPipe(){
-    // hoe beide rijen random lengte?
-    rect(this.x, this.y, this.w, this.h);
-    rect(this.x, 400 - this.h, this.w, this.h);
+  }
+  
+  drawPillar() {
+    fill("#b2d4bd");
     noStroke();
+    rect(this.x, this.y, 50, this.h);
+    this.x -= 3;
     // dit doet t niet voor some reason
     // if (frog.y < this.top || frog.y > height - this.bottom) {
     //   if (frog.x > this.x && frog.x < this.x + this.w) {
     //     fill("red")
-    //   }
     // }
-  }
-  movePipe(){
-    this.x -= this.speed;
+    //}
   }
 }
 
@@ -52,7 +49,7 @@ class Frog{
     this.vy += this.gravity;
     this.y += this.vy;
     // dit hieronder doet raar met de foto als frog
-    this.y = constrain(this.y, 200, 400);
+    this.y = constrain(this.y, 0, 400);
   } 
 }
 
@@ -71,11 +68,12 @@ function draw() {
   background(bg);
   frog.draw();
   frog.move();
-  if (frameCount % 200 == 0) {
-    pipes.push(new Paddenstoel(550,0,this.w,this.h));
+  if(frameCount % 60 == 0){   
+    let randomHeight = random(height - 150)
+
+    pillars.push(new Pillar(550,0, randomHeight));
+    pillars.push(new Pillar(550,randomHeight + 150, 1000));
   }
-  for (var i = pipes.length-1; i >= 0; i--) {
-    pipes[i].drawPipe();
-    pipes[i].movePipe();
-  }
+
+  pillars.forEach(p => p.drawPillar());
 }
