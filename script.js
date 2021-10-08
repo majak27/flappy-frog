@@ -16,21 +16,31 @@ class Pillar {
     this.x = x;
     this.y = y;
     this.h = h;
+    this.w = 50;
     this.top = (200 + (200-this.h));
     this.bottom = (200-this.h);
+    this.c = "#b2d4bd";
   }
   
   drawPillar() {
-    fill("#b2d4bd");
+    fill(this.c);
     noStroke();
-    rect(this.x, this.y, 50, this.h);
-    this.x -= 3;
+    rect(this.x, this.y, this.w, this.h);
+    this.x -= 3;    
+    
     // dit doet t niet voor some reason
-    // if (frog.y < this.top || frog.y > height - this.bottom) {
-    //   if (frog.x > this.x && frog.x < this.x + this.w) {
-    //     fill("red")
+    if (frog.x + frog.w > this.x && frog.x < this.x + this.w) {
+      if (frog.y + frog.h > this.y && frog.y < this.y + this.h) {
+        this.c = "red";
+      }
+      }
+      else{
+        this.c = "green";
+      }
+    
+    // if (frog.y < this.top && frog.y > height - this.bottom) {
+    //   this.c = "orange";      
     // }
-    //}
   }
 }
 
@@ -38,11 +48,14 @@ class Frog{
   constructor(vy, y, gravity){
     this.vy = vy;
     this.y = y;
+    this.w = 60;
+    this.h = 60;
+    this.x = 150;
     this.gravity = gravity;
   }
 
   draw(){
-    image(fr, 150, this.y, 60, 60);
+    image(fr, this.x, this.y, this.w, this.h);
   }
 
   move(){   
@@ -62,6 +75,7 @@ function keyPressed(){
 function setup() {
   createCanvas(550, 400);
   frog = new Frog(-0.5, 150, 0.25);
+
 }
 
 function draw() {
