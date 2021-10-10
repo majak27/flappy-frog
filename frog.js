@@ -1,11 +1,12 @@
 class Frog {
-  constructor(vy, y, gravity) {
+  constructor(vy, y, gravity, hearts) {
     this.vy = vy;
     this.y = y;
     this.w = 50;
     this.h = 50;
     this.x = 150;
     this.gravity = gravity;
+    this.hearts = 3;
   }
 
   draw() {
