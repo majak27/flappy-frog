@@ -1,10 +1,7 @@
 let pillars = [];
-var gravity = 0.35;
-var y = 200;
-var vy = -1.0;
 var frog;
 var gameState = 0;
-var a = "red";
+var score = 0;
 let jump;
 
 function preload() {
@@ -47,7 +44,7 @@ function draw() {
   else if (gameState == 1) {
     clear();
     background(bg);
-    text(frog.hearts, 30, 50);
+    text(score, 30, 50);
     textSize(30);
     frog.draw();
     frog.move();
@@ -58,16 +55,11 @@ function draw() {
     }
     pillars.forEach(p => p.drawPillar());
     pillars.forEach(p => p.hit());
-    if (frog.hearts == 3) {
-      image(hrt, 10, 10, 20, 20)
-      image(hrt, 35, 10, 20, 20)
-      image(hrt, 60, 10, 20, 20)
-    } else if (hearts == 2) {
-      image(hrt, 10, 10, 20, 20)
-      image(hrt, 35, 10, 20, 20)
-    } else if (hearts == 1) {
-      image(hrt, 10, 10, 20, 20)
+
+    if(pillars.length > 4 && frameCount % 60 == 30){
+      score++;
     }
+
   }
   else if (gameState == 2) {
     gameOver()
