@@ -19,11 +19,25 @@ function setup() {
   background(bg);
 }
 
-if (gameState == 0) {
-  function keyPressed() {
-    if (keyCode == 13) {
+// if (gameState == 0) {
+//   function keyPressed() {
+//     if (keyCode == 13) {
+//       gameState = 1;
+//     } else if (keyCode = 32) {
+//       frog.vy = -5;
+//       jump.play();
+//     }
+//   }
+// } 
+
+function keyPressed() {
+  if (keyCode == 13) {
+    if(gameState != 1){ 
       gameState = 1;
-    } else if (keyCode = 32) {
+    }
+  }
+  else if (keyCode == 32) {
+    if (gameState == 1){
       frog.vy = -5;
       jump.play();
     }
@@ -44,8 +58,6 @@ function draw() {
   else if (gameState == 1) {
     clear();
     background(bg);
-    text(score, 30, 50);
-    textSize(30);
     frog.draw();
     frog.move();
     if (frameCount % 60 == 0) {
@@ -56,25 +68,24 @@ function draw() {
     pillars.forEach(p => p.drawPillar());
     pillars.forEach(p => p.hit());
 
-    if(pillars.length > 4 && frameCount % 60 == 30){
+    if (pillars.length > 5 && frameCount % 60 == 20) {
       score++;
     }
-
+    text(score, 30, 50);
+    textSize(30);
   }
   else if (gameState == 2) {
     gameOver()
   }
 }
 
-function keyPressed() {
-  if (keyCode == 32) {
-    frog.vy = -5;
-  }
-}
+
 
 function gameOver() {
   clear();
   background(bg);
   text("game over..", 100, 100)
+  pillars = [];
+  score = 0;
 }
 

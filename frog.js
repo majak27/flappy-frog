@@ -5,7 +5,7 @@ class Frog {
     this.w = 50;
     this.h = 50;
     this.x = 150;
-    this.gravity = gravity;
+    this.gravity = 0.40;
     this.hearts = 3;
   }
 
