@@ -11,6 +11,7 @@ function preload() {
   jump = loadSound('audio/jump.mp3');
   ps = loadImage('pictures/paddenstoel.png')
   oswald = loadFont('font/oswald.ttf');
+  pepe = loadImage('pictures/pepe2.png')
 }
 
 function setup() {
@@ -18,17 +19,6 @@ function setup() {
   frog = new Frog(-0.5, 150, 0.25);
   background(bg);
 }
-
-// if (gameState == 0) {
-//   function keyPressed() {
-//     if (keyCode == 13) {
-//       gameState = 1;
-//     } else if (keyCode = 32) {
-//       frog.vy = -5;
-//       jump.play();
-//     }
-//   }
-// } 
 
 function keyPressed() {
   if (keyCode == 13) {
@@ -53,7 +43,9 @@ function draw() {
     fill(0);
     text("Press enter to play", 190, 305);
     textSize(25);
-    textFont(oswald)
+    textFont(oswald);
+    pillars = [];
+    score = 0;
   }
   else if (gameState == 1) {
     clear();
@@ -84,8 +76,16 @@ function draw() {
 function gameOver() {
   clear();
   background(bg);
-  text("game over..", 100, 100)
-  pillars = [];
-  score = 0;
+  image(pepe, 170, 60);
+
+  rect(-10, 315, 600, 75);
+  fill(255);
+  strokeWeight(8);
+  stroke(0);
+  text("score:          " + score, 100, 345);
+  textSize(25);
+  textFont(oswald);
+  text("highscore:", 100, 375);
 }
 
+//  text("game over..", 100, 100)
