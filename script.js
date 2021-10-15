@@ -3,6 +3,7 @@ var frog;
 var gameState = 0;
 var score = 0;
 let jump;
+var highscore= 0;
 
 function preload() {
   bg = loadImage('pictures/bg.jpg');
@@ -22,7 +23,7 @@ function setup() {
 
 function keyPressed() {
   if (keyCode == 13) {
-    if(gameState != 1){ 
+    if(gameState == 0){ 
       gameState = 1;
     }
   }
@@ -32,20 +33,26 @@ function keyPressed() {
       jump.play();
     }
   }
+  if (keyCode == 13){
+    if (gameState == 2){
+      console.log("hey")
+      reset();
+    }
+  }
 }
 
 function draw() {
   if (gameState == 0) {
+    background(bg);
     image(ps, 50, -25, 450, 450);
     strokeWeight(8);
     fill(255);
     rect(-10, 265, 600, 70);
     fill(0);
+    strokeWeight(2);
     text("Press enter to play", 190, 305);
     textSize(25);
     textFont(oswald);
-    pillars = [];
-    score = 0;
   }
   else if (gameState == 1) {
     clear();
@@ -72,20 +79,29 @@ function draw() {
 }
 
 
-
 function gameOver() {
   clear();
+  if (score > highscore) {
+    highscore = score;
+  }
   background(bg);
   image(pepe, 170, 60);
-
+  strokeWeight(8);
   rect(-10, 315, 600, 75);
   fill(255);
-  strokeWeight(8);
+  strokeWeight(2);
   stroke(0);
-  text("score:          " + score, 100, 345);
-  textSize(25);
+  textSize(20);
+  text("score:          " + score, 190, 340);
+  text("highscore:          " + highscore, 190, 360);
+  textSize(20);
   textFont(oswald);
-  text("highscore:", 100, 375);
+  text("Press enter to start again.", 190, 380);
 }
 
-//  text("game over..", 100, 100)
+function reset() {
+  clear();
+  score = 0;
+  pillars = [];
+  gameState = 0;
+}
