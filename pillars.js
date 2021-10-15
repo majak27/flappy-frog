@@ -1,5 +1,5 @@
 class Pillar {
-  constructor(x, y, h, c) {
+  constructor(x, y, h, w, c) {
     this.x = x;
     this.y = y;
     this.h = h;
@@ -18,7 +18,6 @@ class Pillar {
   hit() {
     if (frog.x + frog.w - 20 > this.x && frog.x < this.x + this.w) {
       if (frog.y + frog.h > this.y && frog.y < this.y + this.h) {
-        this.c = "#733238";
         gameState = 2;
       }
     }
