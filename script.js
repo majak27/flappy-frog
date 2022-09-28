@@ -25,12 +25,13 @@ function keyPressed() {
     if (gameState == 0) {
       gameState = 1;
     }
-  } else if (keyCode == 32) {
-    if (gameState == 1) {
-      frog.vy = -5;
-      jump.play();
-    }
-  }
+  } 
+  // else if (keyCode == 32) {
+  //   if (gameState == 1) {
+  //     frog.vy = -5;
+  //     jump.play();
+  //   }
+  // }
   if (keyCode == 13) {
     if (gameState == 2) {
       reset();
@@ -58,8 +59,10 @@ function draw() {
     background(bg);
     frog.draw();
     frog.move();
+    frog.think(pillars);
 
     if (frameCount % 60 == 0) {
+      console.log("hoi");
       let randomHeight = random(height - 150);
       pillars.push(new Pillar(550, 0, randomHeight));
       pillars.push(new Pillar(550, randomHeight + 150, 1000));
