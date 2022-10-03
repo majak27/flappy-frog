@@ -1,8 +1,12 @@
 let pillars = [];
-var frog;
+let activeFrogs = [];
+let allFrogs = [];
+var totalPopulation = 50;
+let frog;
 var gameState = 0;
 var score = 0;
 var highscore = 0;
+var smartestFrog;
 
 function preload() {
   bg = loadImage('pictures/bg.jpg');
@@ -16,8 +20,9 @@ function preload() {
 
 function setup() {
   createCanvas(550, 400);
-  frog = new Frog(-0.5, 150, 0.25);
+  //frog = new Frog(-0.5, 150, 0.25);
   background(bg);
+  newFrogs();
 }
 
 function keyPressed() {
@@ -25,7 +30,7 @@ function keyPressed() {
     if (gameState == 0) {
       gameState = 1;
     }
-  } 
+  }
   // else if (keyCode == 32) {
   //   if (gameState == 1) {
   //     frog.vy = -5;
@@ -54,31 +59,49 @@ function draw() {
     textSize(30);
     textFont(oswald);
     text("Press enter to play", 175, 310);
+
   } else if (gameState == 1) {
     clear();
+
     background(bg);
-    frog.draw();
-    frog.move();
-    frog.think(pillars);
+
+    activeFrogs.forEach(frog => {
+      frog.draw();
+      frog.move();
+      frog.think(pillars);
+    })
 
     if (frameCount % 60 == 0) {
-      console.log("hoi");
       let randomHeight = random(height - 150);
       pillars.push(new Pillar(550, 0, randomHeight));
       pillars.push(new Pillar(550, randomHeight + 150, 1000));
     }
 
     pillars.forEach(p => p.drawPillar());
-    pillars.forEach(p => p.hit());
+    pillars.forEach(p => {
+      allFrogs.forEach(frog => {
+        p.hit(frog);
+      });
+    });
 
     if (pillars.length > 5 && frameCount % 60 == 20) {
       score++;
     }
 
+    // one left? Then this is the smartest bird
+    if (activeFrogs.length == 1) {
+      smartestFrog = activeFrogs[0];
+    }
+
+    // If we're out of birds go to the next generation
+    if (activeFrogs.length == 0) {
+      reset();
+    }
+    
     text(score, 30, 50);
     textSize(30);
   } else if (gameState == 2) {
-    gameOver();
+    reset();
   }
 }
 
@@ -113,7 +136,24 @@ function reset() {
   clear();
   score = 0;
   pillars = [];
+
   gameState = 1;
-  frog.y = 125;
-  frog.vy = 0;
+
+  newFrogs();
+}
+
+function newFrogs() {
+  for (let i = 0; i < totalPopulation; i++) {
+    
+    let frog
+    if(smartestFrog){
+      frog = new Frog(smartestFrog.brain);
+    } 
+    else {
+      frog = new Frog();
+    }
+    
+    activeFrogs[i] = frog;
+    allFrogs[i] = frog;
+  }
 }

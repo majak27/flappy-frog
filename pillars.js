@@ -20,10 +20,12 @@ class Pillar {
     this.x -= 3;
   }
 
-  hit() {
+  hit(frog) {
     if (frog.x + frog.w - 20 > this.x && frog.x < this.x + this.w) {
       if (frog.y + frog.h > this.y && frog.y < this.y + this.h) {
-        gameState = 2;
+        //gameState = 2;
+        let idx = activeBirds.indexOf(this);
+        activeBirds.splice(idx, 1);
       }
     }
   }
