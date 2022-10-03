@@ -1,12 +1,13 @@
 let pillars = [];
 let activeFrogs = [];
 let allFrogs = [];
-var totalPopulation = 50;
+var totalPopulation = 100;
 let frog;
 var gameState = 0;
 var score = 0;
 var highscore = 0;
 var smartestFrog;
+var generation = 0;
 
 function preload() {
   bg = loadImage('pictures/bg.jpg');
@@ -31,12 +32,12 @@ function keyPressed() {
       gameState = 1;
     }
   }
-  // else if (keyCode == 32) {
-  //   if (gameState == 1) {
-  //     frog.vy = -5;
-  //     jump.play();
-  //   }
-  // }
+  else if (keyCode == 32) {
+    if (gameState == 1) {
+      frog.vy = -5;
+      jump.play();
+    }
+  }
   if (keyCode == 13) {
     if (gameState == 2) {
       reset();
@@ -78,28 +79,36 @@ function draw() {
     }
 
     pillars.forEach(p => p.drawPillar());
-    pillars.forEach(p => {
-      allFrogs.forEach(frog => {
-        p.hit(frog);
+
+    pillars.forEach((p) => {
+      activeFrogs.forEach(frog => {
+        if (p.isColliding(frog)) {
+          frog.hit();
+        }
       });
     });
+
 
     if (pillars.length > 5 && frameCount % 60 == 20) {
       score++;
     }
 
-    // one left? Then this is the smartest bird
+    // one left? Then this is the smartest frog
     if (activeFrogs.length == 1) {
       smartestFrog = activeFrogs[0];
     }
 
-    // If we're out of birds go to the next generation
+    // If we're out of frogs go to the next generation
     if (activeFrogs.length == 0) {
       reset();
     }
-    
+
+    //text('generation:' + generation, 10, 20);
+    text('score:' + score, 10, 30);
+    text('highscore:' + highscore, 10, 40);
+    text('living frogs:' + activeFrogs.length, 10, 50);
     text(score, 30, 50);
-    textSize(30);
+    textSize(10);
   } else if (gameState == 2) {
     reset();
   }
@@ -133,26 +142,28 @@ function gameOver() {
 }
 
 function reset() {
+  if (score > highscore) {
+    highscore = score;
+  }
   clear();
   score = 0;
   pillars = [];
-
   gameState = 1;
-
   newFrogs();
+  generation++;
+
 }
 
 function newFrogs() {
   for (let i = 0; i < totalPopulation; i++) {
-    
+
     let frog
-    if(smartestFrog){
+    if (smartestFrog) {
       frog = new Frog(smartestFrog.brain);
-    } 
+    }
     else {
       frog = new Frog();
     }
-    
     activeFrogs[i] = frog;
     allFrogs[i] = frog;
   }

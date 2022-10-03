@@ -21,16 +21,17 @@ class Frog {
       this.brain = brain.copy();
       this.brain.mutate(mutate);
     } else {
-      //this.brain = new NeuralNetwork(5, 50, 2);
+      this.brain = new NeuralNetwork(5, 50, 2);
     }
   }
 
+  hit(){
+    let idx = activeFrogs.indexOf(this);
+    activeFrogs.splice(idx, 1);
+  }
+  
   draw() {
     image(fr, this.x, this.y, this.w, this.h);
-
-    if (this.y == 350) {
-      gameState = 2;
-    }
   }
 
   think(pillars) {
@@ -59,19 +60,18 @@ class Frog {
       inputs[1] = map(closestPipe.y, 0, height, 0, 1);
       // bottom of closest pipe opening
       inputs[2] = map(closestPipe.GetBottom(), 0, height, 0, 1);
-      // bird's y position
+      // frog's y position
       inputs[3] = map(this.y, 0, height, 0, 1);
-      // bird's y velocity
+      // frog's y velocity
       inputs[4] = map(this.vy, -5, 5, 0, 1);
         
-      console.log(inputs)
       // Get the outputs from the network
       let action = this.brain.predict(inputs);
 
       //console.log(action)
       // Decide to jump or not!
       if (action[1] > action[0]) {
-        this.up();
+        this.vy = -5;
       }
     }
   }
