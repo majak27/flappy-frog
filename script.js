@@ -1,7 +1,7 @@
 let pillars = [];
 let activeFrogs = [];
 let allFrogs = [];
-var totalPopulation = 1000;
+var totalPopulation = 500;
 let frog;
 let player;
 var gameState = 0;
@@ -74,13 +74,13 @@ function draw() {
       frog.think(pillars);
     })
 
-    player.draw();
-    player.move(); 
+    // player.draw();
+    // player.move(); 
     
-    if (frameCount % 80 == 0) {
+    if (frameCount % 100 == 0) {
       let randomHeight = random(height - 150);
       pillars.push(new Pillar(550, 0, randomHeight));
-      pillars.push(new Pillar(550, randomHeight + 175, 1000));
+      pillars.push(new Pillar(550, randomHeight + 150, 1000));
     }
 
     pillars.forEach(p => p.drawPillar());
@@ -94,13 +94,14 @@ function draw() {
     });
 
 
-    if ( pillars.length > 5 && frameCount % 80 == 0) {
+    if ( pillars.length > 3 && frameCount % 100 == 33) {
       score++;
     }
 
     // one left? Then this is the smartest frog
     if (activeFrogs.length == 1) {
       smartestFrog = activeFrogs[0];
+      localStorage.setItem("smartestFrog", JSON.stringify(smartestFrog));
     }
 
     // If we're out of frogs go to the next generation
@@ -155,6 +156,8 @@ function reset() {
   gameState = 1;
   newFrogs();
   generation++;
+  player.y = 125;
+  player.vy = -5;   
 
 }
 

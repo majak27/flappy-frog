@@ -1,7 +1,6 @@
 class FrogPlayer {
   constructor(vy, y, w, h, x, gravity) {
     this.vy = vy;
-    this.y = y;
     this.y = 125;
     this.w = 50;
     this.h = 50;
