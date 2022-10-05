@@ -1,13 +1,14 @@
 let pillars = [];
 let activeFrogs = [];
 let allFrogs = [];
-var totalPopulation = 100;
+var totalPopulation = 1000;
 let frog;
+let player;
 var gameState = 0;
 var score = 0;
 var highscore = 0;
 var smartestFrog;
-var generation = 0;
+var generation = 1;
 
 function preload() {
   bg = loadImage('pictures/bg.jpg');
@@ -15,13 +16,14 @@ function preload() {
   ps = loadImage('pictures/paddenstoel.png')
   jump = loadSound('audio/jump.mp3');
   oswald = loadFont('font/oswald.ttf');
-  pepe = loadImage('pictures/pepe2.png')
-  go = loadImage('pictures/gameover.png')
+  pepe = loadImage('pictures/pepe2.png');
+  go = loadImage('pictures/gameover.png');
+  bee = loadImage('pictures/bee.png');
 }
 
 function setup() {
   createCanvas(550, 400);
-  //frog = new Frog(-0.5, 150, 0.25);
+  player = new FrogPlayer(-0.5, 150, 0.25);
   background(bg);
   newFrogs();
 }
@@ -34,7 +36,7 @@ function keyPressed() {
   }
   else if (keyCode == 32) {
     if (gameState == 1) {
-      frog.vy = -5;
+      player.vy = -5;
       jump.play();
     }
   }
@@ -65,17 +67,20 @@ function draw() {
     clear();
 
     background(bg);
-
+    
     activeFrogs.forEach(frog => {
       frog.draw();
       frog.move();
       frog.think(pillars);
     })
 
-    if (frameCount % 60 == 0) {
+    player.draw();
+    player.move(); 
+    
+    if (frameCount % 80 == 0) {
       let randomHeight = random(height - 150);
       pillars.push(new Pillar(550, 0, randomHeight));
-      pillars.push(new Pillar(550, randomHeight + 150, 1000));
+      pillars.push(new Pillar(550, randomHeight + 175, 1000));
     }
 
     pillars.forEach(p => p.drawPillar());
@@ -89,7 +94,7 @@ function draw() {
     });
 
 
-    if (pillars.length > 5 && frameCount % 60 == 20) {
+    if ( pillars.length > 5 && frameCount % 80 == 0) {
       score++;
     }
 
@@ -103,11 +108,10 @@ function draw() {
       reset();
     }
 
-    //text('generation:' + generation, 10, 20);
+    text('generation:' + generation, 10, 20);
     text('score:' + score, 10, 30);
     text('highscore:' + highscore, 10, 40);
     text('living frogs:' + activeFrogs.length, 10, 50);
-    text(score, 30, 50);
     textSize(10);
   } else if (gameState == 2) {
     reset();
