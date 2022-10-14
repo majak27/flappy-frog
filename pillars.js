@@ -7,10 +7,12 @@ class Pillar {
     this.c = "#2d6b4e";
   }
 
+  //onderkant van de pillars voor in de think
   GetBottom() {
     return this.y + this.h;
   }
 
+  // laat de pillars zien
   drawPillar() {
     fill(this.c);
     stroke("white");

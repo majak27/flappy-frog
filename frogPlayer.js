@@ -1,3 +1,4 @@
+// voor als ik een eigen player had toegevoegd </3
 class FrogPlayer {
   constructor(vy, y, w, h, x, gravity) {
     this.vy = vy;

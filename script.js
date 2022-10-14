@@ -23,7 +23,6 @@ function preload() {
 
 function setup() {
   createCanvas(550, 400);
-  player = new FrogPlayer(-0.5, 150, 0.25);
   background(bg);
   newFrogs();
 }
@@ -67,16 +66,13 @@ function draw() {
     clear();
 
     background(bg);
-    
+
     activeFrogs.forEach(frog => {
       frog.draw();
       frog.move();
       frog.think(pillars);
     })
 
-    // player.draw();
-    // player.move(); 
-    
     if (frameCount % 100 == 0) {
       let randomHeight = random(height - 150);
       pillars.push(new Pillar(550, 0, randomHeight));
@@ -94,7 +90,7 @@ function draw() {
     });
 
 
-    if ( pillars.length > 3 && frameCount % 100 == 33) {
+    if (pillars.length > 3 && frameCount % 100 == 33) {
       score++;
     }
 
@@ -157,7 +153,7 @@ function reset() {
   newFrogs();
   generation++;
   player.y = 125;
-  player.vy = -5;   
+  player.vy = -5;
 
 }
 

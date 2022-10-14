@@ -25,11 +25,13 @@ class Frog {
     }
   }
 
-  hit(){
+  //haalt de frog die dood is uit de lijst met levende frogs
+  hit() {
     let idx = activeFrogs.indexOf(this);
     activeFrogs.splice(idx, 1);
   }
-  
+
+  //laat de kikker zien
   draw() {
     image(fr, this.x, this.y, this.w, this.h);
   }
@@ -64,7 +66,7 @@ class Frog {
       inputs[3] = map(this.y, 0, height, 0, 1);
       // frog's y velocity
       inputs[4] = map(this.vy, -5, 5, 0, 1);
-        
+
       // Get the outputs from the network
       let action = this.brain.predict(inputs);
 
